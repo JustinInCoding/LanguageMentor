@@ -36,7 +36,7 @@ class ConversationAgent:
         self.name = "Conversation Agent"  # 代理名称
         
         # 读取系统提示语，从文件中加载
-        with open("prompts/conversation_prompt.txt", "r", encoding="utf-8") as file:
+        with open("prompts/conversation_prompt_v2.txt", "r", encoding="utf-8") as file:
             self.system_prompt = file.read().strip()
 
         # 创建聊天提示模板，包括系统提示和消息占位符
@@ -48,6 +48,7 @@ class ConversationAgent:
         # 初始化 ChatOllama 模型，配置模型参数
         self.chatbot = self.prompt | ChatOllama(
             model="llama3.1:8b-instruct-q8_0",  # 使用的模型名称
+            base_url="http://188.239.40.131:11434",  # 模型服务的基础URL
             max_tokens=8192,  # 最大生成的token数
             temperature=0.8,  # 生成文本的随机性
         )
