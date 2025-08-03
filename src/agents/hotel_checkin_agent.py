@@ -56,7 +56,7 @@ class HotelCheckInAgent(ScenarioAgent):
         self.chatbot_with_history = RunnableWithMessageHistory(self.chatbot, get_session_history)
 
         # 配置字典，包含会话ID等可配置参数
-        self.config = {"configurable": {"session_id": "abc123"}}
+        self.config = {"configurable": {"session_id": "abc1231111"}}
 
     def chat(self, user_input):
         """
