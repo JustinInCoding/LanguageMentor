@@ -13,11 +13,12 @@ class ConversationAgent:
     """
     对话代理类，负责处理与用户的对话。
     """
-    def __init__(self, session_id=None):
+    def __init__(self, session_id=None, model_name="llama3.1:8b-instruct-q8_0"):
         self.name = "conversation"  # 设置代理名称为 "conversation"
         self.session_id = session_id if session_id else self.name  # 如果未提供会话ID，则使用代理名称作为会话ID
         self.prompt_file = "prompts/conversation_prompt.txt"  # 系统提示语文件路径
         self.prompt = self.load_prompt()  # 加载系统提示语
+        self.model_name = model_name  # 设置模型名称
 
         self.create_chatbot()  # 创建聊天机器人
 
@@ -43,7 +44,7 @@ class ConversationAgent:
 
         # 初始化 ChatOllama 模型，配置参数
         self.chatbot = system_prompt | ChatOllama(
-            model="llama3.1:8b-instruct-q8_0",  # 使用的模型名称
+            model=self.model_name,  # 使用的模型名称
             max_tokens=8192,  # 最大生成的 token 数
             temperature=0.8,  # 随机性配置
         )

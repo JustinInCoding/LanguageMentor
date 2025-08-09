@@ -10,12 +10,13 @@ from .session_history import get_session_history  # 导入会话历史相关方�
 from utils.logger import LOG
 
 class ScenarioAgent:
-    def __init__(self, scenario_name):
+    def __init__(self, scenario_name, model_name="llama3.1:8b-instruct-q8_0"):
         self.name = scenario_name
         self.prompt_file = f"prompts/{self.name}_prompt.txt"
         self.intro_file = f"content/intro/{self.name}.json"
         self.prompt = self.load_prompt()
         self.intro_messages = self.load_intro()
+        self.model_name = model_name
 
         self.create_chatbot()
 
@@ -46,7 +47,7 @@ class ScenarioAgent:
 
             # 初始化 ChatOllama 模型，配置模型参数
             self.chatbot = system_prompt | ChatOllama(
-                model="llama3.1:8b-instruct-q8_0",  # 使用的模型名称
+                model=self.model_name,  # 使用的模型名称
                 max_tokens=8192,  # 最大生成的token数
                 temperature=0.8,  # 生成文本的随机性
             )
