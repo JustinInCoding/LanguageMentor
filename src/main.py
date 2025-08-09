@@ -32,8 +32,9 @@ model_dropdown = gr.Dropdown(
 )
 
 def update_model(model_name):
-    global current_model_name
+    global current_model_name, conversation_agent
     current_model_name = model_name
+    conversation_agent = create_conversation_agent(model_name)
     return f"已切换模型为: {model_name}"
 
 # 处理用户对话的函数
@@ -88,8 +89,8 @@ with gr.Blocks(title="LanguageMentor 英语私教") as language_mentor_app:
 
         # 场景聊天界面
         def scenario_chat_fn(message, history, scenario):
-            agent = create_scenario_agent(scenario, current_model_name)
-            return agent.chat_with_history(message)
+            # 每次对话都创建新的agent实例以确保使用最新模型
+            return create_scenario_agent(scenario, current_model_name).chat_with_history(message)
 
         gr.ChatInterface(
             fn=scenario_chat_fn,
