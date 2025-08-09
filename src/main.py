@@ -4,6 +4,7 @@ from agents.job_interview_agent import JobInterviewAgent
 from agents.hotel_checkin_agent import HotelCheckInAgent
 from agents.salary_negotiation_agent import SalaryNegotiationAgent
 from agents.renting_agent import RentingAgent
+from agents.ask_for_leave_agent import AskForLeaveAgent
 from utils.logger import LOG
 
 # 实现对话 Agent 和场景 Agent 的选择与调用
@@ -12,7 +13,7 @@ job_interview_agent = JobInterviewAgent()
 hotel_checkin_agent = HotelCheckInAgent()
 salary_negotiation_agent = SalaryNegotiationAgent()
 renting_agent = RentingAgent()
-
+ask_for_leave_agent = AskForLeaveAgent()
 
 # 对话 Agent 处理函数
 def handle_conversation(user_input, chat_history):
@@ -32,7 +33,8 @@ def handle_scenario(user_input, chat_history, scenario):
         "job_interview": job_interview_agent,
         "hotel_checkin": hotel_checkin_agent,
         "salary_negotiation": salary_negotiation_agent,
-        "renting": renting_agent
+        "renting": renting_agent,
+        "ask_for_leave": ask_for_leave_agent,
     }
     bot_message = agents[scenario].chat_with_history(user_input)
     LOG.info(f"[ChatBot]: {bot_message}")
@@ -65,7 +67,8 @@ with gr.Blocks(title="LanguageMentor 英语私教") as language_mentor_app:
                 ("求职面试", "job_interview"),
                 ("酒店入住", "hotel_checkin"),
                 ("薪资谈判", "salary_negotiation"),
-                ("租房", "renting")
+                ("租房", "renting"),
+                ("请假", "ask_for_leave"),
             ], 
             label="场景")
 
